@@ -1,9 +1,0 @@
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Models\bin\Debug\netstandard1.6\ThamcoVendors.Models.deps.json
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Models\bin\Debug\netstandard1.6\ThamcoVendors.Models.dll
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Models\bin\Debug\netstandard1.6\ThamcoVendors.Models.pdb
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Models\obj\Debug\netstandard1.6\ThamcoVendors.Models.csprojResolveAssemblyReference.cache
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Models\obj\Debug\netstandard1.6\ThamcoVendors.Models.csproj.CoreCompileInputs.cache
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Models\obj\Debug\netstandard1.6\ThamcoVendors.Models.AssemblyInfoInputs.cache
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Models\obj\Debug\netstandard1.6\ThamcoVendors.Models.AssemblyInfo.cs
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Models\obj\Debug\netstandard1.6\ThamcoVendors.Models.dll
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Models\obj\Debug\netstandard1.6\ThamcoVendors.Models.pdb

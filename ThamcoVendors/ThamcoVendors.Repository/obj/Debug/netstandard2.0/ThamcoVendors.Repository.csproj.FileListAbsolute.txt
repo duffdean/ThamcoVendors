@@ -1,5 +1,0 @@
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository\bin\Debug\netstandard2.0\ThamcoVendors.Repository.deps.json
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository\bin\Debug\netstandard2.0\ThamcoVendors.Repository.dll
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository\obj\Debug\netstandard2.0\ThamcoVendors.Repository.csproj.CoreCompileInputs.cache
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository\obj\Debug\netstandard2.0\ThamcoVendors.Repository.AssemblyInfoInputs.cache
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository\obj\Debug\netstandard2.0\ThamcoVendors.Repository.AssemblyInfo.cs

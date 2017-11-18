@@ -1,8 +1,0 @@
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository.Interfaces\bin\Debug\netstandard1.6\ThamcoVendors.Repository.Interfaces.deps.json
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository.Interfaces\bin\Debug\netstandard1.6\ThamcoVendors.Repository.Interfaces.dll
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository.Interfaces\bin\Debug\netstandard1.6\ThamcoVendors.Repository.Interfaces.pdb
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository.Interfaces\obj\Debug\netstandard1.6\ThamcoVendors.Repository.Interfaces.csproj.CoreCompileInputs.cache
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository.Interfaces\obj\Debug\netstandard1.6\ThamcoVendors.Repository.Interfaces.AssemblyInfoInputs.cache
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository.Interfaces\obj\Debug\netstandard1.6\ThamcoVendors.Repository.Interfaces.AssemblyInfo.cs
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository.Interfaces\obj\Debug\netstandard1.6\ThamcoVendors.Repository.Interfaces.dll
-F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.Repository.Interfaces\obj\Debug\netstandard1.6\ThamcoVendors.Repository.Interfaces.pdb
