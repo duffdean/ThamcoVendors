@@ -1,0 +1,14 @@
+ThamcoVendors/bin/
+ThamcoVendors/obj
+ThamcoVendors.DTO/bin/
+ThamcoVendors.DTO/obj/
+ThamcoVendors.Models/bin/
+ThamcoVendors.Models/obj/
+ThamcoVendors.Repository/bin/
+ThamcoVendors.Repository/obj/
+ThamcoVendors.Repository.Interfaces/bin/
+ThamcoVendors.Repository.Interfaces/obj/
+ThamcoVendors.Service/bin/
+ThamcoVendors.Service/obj/
+ThamcoVendors.Service.Interfaces/bin/
+ThamcoVendors.Service.Interfaces/obj/
