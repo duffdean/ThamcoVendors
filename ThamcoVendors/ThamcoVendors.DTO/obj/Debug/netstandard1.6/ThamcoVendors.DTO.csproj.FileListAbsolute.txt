@@ -1,0 +1,9 @@
+F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.DTO\bin\Debug\netstandard1.6\ThamcoVendors.DTO.deps.json
+F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.DTO\bin\Debug\netstandard1.6\ThamcoVendors.DTO.dll
+F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.DTO\bin\Debug\netstandard1.6\ThamcoVendors.DTO.pdb
+F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.DTO\obj\Debug\netstandard1.6\ThamcoVendors.DTO.csprojResolveAssemblyReference.cache
+F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.DTO\obj\Debug\netstandard1.6\ThamcoVendors.DTO.csproj.CoreCompileInputs.cache
+F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.DTO\obj\Debug\netstandard1.6\ThamcoVendors.DTO.AssemblyInfoInputs.cache
+F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.DTO\obj\Debug\netstandard1.6\ThamcoVendors.DTO.AssemblyInfo.cs
+F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.DTO\obj\Debug\netstandard1.6\ThamcoVendors.DTO.dll
+F:\University\Year 4\Software Architecture\ICA\ThamcoVendors\ThamcoVendors\ThamcoVendors.DTO\obj\Debug\netstandard1.6\ThamcoVendors.DTO.pdb

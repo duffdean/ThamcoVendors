@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ThamcoVendors.DTO\ThamcoVendors.DTO.csproj" />
+    <ProjectReference Include="..\ThamcoVendors.Models\ThamcoVendors.Models.csproj" />
+    <ProjectReference Include="..\ThamcoVendors.Repository.Interfaces\ThamcoVendors.Repository.Interfaces.csproj" />
+    <ProjectReference Include="..\ThamcoVendors.Service.Interfaces\ThamcoVendors.Service.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

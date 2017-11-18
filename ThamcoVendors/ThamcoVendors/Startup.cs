@@ -7,6 +7,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using ThamcoVendors.Models;
+using Microsoft.EntityFrameworkCore;
+using ThamcoVendors.Repository.Interfaces;
+using ThamcoVendors.Repository;
+using ThamcoVendors.Service.Interfaces;
+using ThamcoVendors.Service;
 
 namespace ThamcoVendors
 {
@@ -27,8 +35,22 @@ namespace ThamcoVendors
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddDbContext<ThamcoVendorDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             // Add framework services.
             services.AddMvc();
+
+            //Get options from app settings for Globals, such as host address etc.
+            var appSettings = Configuration.GetSection("AppSettings");
+
+            //services.Configure<AppSettings>(appSettings);
+
+            // Add application services.
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            services.AddTransient<IVendorService, VendorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

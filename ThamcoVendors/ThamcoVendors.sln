@@ -7,6 +7,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThamcoVendors", "ThamcoVend
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CFA8BB26-5653-4373-9808-342D2D3DD637}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThamcoVendors.DTO", "ThamcoVendors.DTO\ThamcoVendors.DTO.csproj", "{52880D74-0883-47CA-B303-59C5DCB21C55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThamcoVendors.Models", "ThamcoVendors.Models\ThamcoVendors.Models.csproj", "{34B8FB79-76EA-4B3E-BAE0-35AD28D70664}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThamcoVendors.Repository", "ThamcoVendors.Repository\ThamcoVendors.Repository.csproj", "{94FCA048-93A8-4148-82D8-BEA2728F0343}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThamcoVendors.Repository.Interfaces", "ThamcoVendors.Repository.Interfaces\ThamcoVendors.Repository.Interfaces.csproj", "{141056F0-27CE-4324-A4F6-BC9589B089E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThamcoVendors.Service", "ThamcoVendors.Service\ThamcoVendors.Service.csproj", "{FF1176DB-F051-44EF-8DD7-FF4DAD3FC8F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThamcoVendors.Service.Interfaces", "ThamcoVendors.Service.Interfaces\ThamcoVendors.Service.Interfaces.csproj", "{CA4FFBA3-1AAA-48C7-B3E0-8E8CDAE6E77E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +33,30 @@ Global
 		{CFA8BB26-5653-4373-9808-342D2D3DD637}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFA8BB26-5653-4373-9808-342D2D3DD637}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFA8BB26-5653-4373-9808-342D2D3DD637}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52880D74-0883-47CA-B303-59C5DCB21C55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52880D74-0883-47CA-B303-59C5DCB21C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52880D74-0883-47CA-B303-59C5DCB21C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52880D74-0883-47CA-B303-59C5DCB21C55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34B8FB79-76EA-4B3E-BAE0-35AD28D70664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34B8FB79-76EA-4B3E-BAE0-35AD28D70664}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34B8FB79-76EA-4B3E-BAE0-35AD28D70664}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34B8FB79-76EA-4B3E-BAE0-35AD28D70664}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94FCA048-93A8-4148-82D8-BEA2728F0343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94FCA048-93A8-4148-82D8-BEA2728F0343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94FCA048-93A8-4148-82D8-BEA2728F0343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94FCA048-93A8-4148-82D8-BEA2728F0343}.Release|Any CPU.Build.0 = Release|Any CPU
+		{141056F0-27CE-4324-A4F6-BC9589B089E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{141056F0-27CE-4324-A4F6-BC9589B089E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{141056F0-27CE-4324-A4F6-BC9589B089E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{141056F0-27CE-4324-A4F6-BC9589B089E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF1176DB-F051-44EF-8DD7-FF4DAD3FC8F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF1176DB-F051-44EF-8DD7-FF4DAD3FC8F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF1176DB-F051-44EF-8DD7-FF4DAD3FC8F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF1176DB-F051-44EF-8DD7-FF4DAD3FC8F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA4FFBA3-1AAA-48C7-B3E0-8E8CDAE6E77E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA4FFBA3-1AAA-48C7-B3E0-8E8CDAE6E77E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA4FFBA3-1AAA-48C7-B3E0-8E8CDAE6E77E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA4FFBA3-1AAA-48C7-B3E0-8E8CDAE6E77E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
