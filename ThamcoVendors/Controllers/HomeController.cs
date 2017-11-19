@@ -17,10 +17,11 @@ namespace ThamcoVendors.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var a = _vendorService.GetAll();
             var b = _vendorService.GetProductsFromBazzasBazaar(null, null, null, null).Result;
+            var c = await _vendorService.GetAllProducts();
             return View();
         }
 

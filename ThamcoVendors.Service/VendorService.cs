@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using ThamcoVendors.Repository.Interfaces;
 using ThamcoVendors.Service.Interfaces;
 using ThamcoVendors.DTO.Vendors;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace ThamcoVendors.Service
 {
@@ -31,7 +35,203 @@ namespace ThamcoVendors.Service
 
             return Vendor == null ? null : Map(Vendor);
         }
-        
+
+        public async Task<List<DTO.OrderProcessProducts>> GetUndercutters()
+        {
+            List<DTO.OrderProcessProducts> products = new List<DTO.OrderProcessProducts>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://undercutters.azurewebsites.net/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = await client.GetAsync("api/product");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    List<Product> obj = new List<Product>();
+
+                    string result = await response.Content.ReadAsStringAsync();
+                    //object json = JsonConvert.DeserializeObject(details.Result);
+
+                    obj = JsonConvert.DeserializeObject<List<Product>>(result);
+
+                    foreach (var prod in obj)
+                    {
+                        products.Add(new DTO.OrderProcessProducts()
+                        {
+                            Id = prod.Id,
+                            Description = prod.Description,
+                            Ean = prod.Ean,
+                            ExpectedRestock = prod.ExpectedRestock,
+                            InStock = prod.InStock,
+                            Name = prod.Name,
+                            Price = prod.Price,
+                            Brand = new DTO.Brand()
+                            {
+                                ID = prod.BrandId,
+                                Name = prod.BrandName
+                            },
+                            Category = new DTO.Category()
+                            {
+                                ID = prod.CategoryId,
+                                Name = prod.CategoryName
+                            }
+                        });
+                    }
+                }
+                else
+                {
+
+                }
+            }
+
+            return products;
+        }
+
+        public async Task<List<DTO.OrderProcessProducts>> GetDodgyDealers()
+        {
+            List<DTO.OrderProcessProducts> products = new List<DTO.OrderProcessProducts>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://dodgydealers.azurewebsites.net/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = await client.GetAsync("api/product");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    List<Product> obj = new List<Product>();
+
+                    string result = await response.Content.ReadAsStringAsync();
+                    //object json = JsonConvert.DeserializeObject(details.Result);
+
+                    obj = JsonConvert.DeserializeObject<List<Product>>(result);
+
+                    foreach (var prod in obj)
+                    {
+                        products.Add(new DTO.OrderProcessProducts()
+                        {
+                            Id = prod.Id,
+                            Description = prod.Description,
+                            Ean = prod.Ean,
+                            ExpectedRestock = prod.ExpectedRestock,
+                            InStock = prod.InStock,
+                            Name = prod.Name,
+                            Price = prod.Price,
+                            Brand = new DTO.Brand()
+                            {
+                                ID = prod.BrandId,
+                                Name = prod.BrandName
+                            },
+                            Category = new DTO.Category()
+                            {
+                                ID = prod.CategoryId,
+                                Name = prod.CategoryName
+                            }
+                        });
+                    }
+                }
+                else
+                {
+
+                }
+            }
+
+            return products;
+        }
+
+        public async Task<List<DTO.OrderProcessProducts>> GetBazzasBazzar()
+        {
+            List<DTO.OrderProcessProducts> products = new List<DTO.OrderProcessProducts>();
+            var obj = await GetProductsFromBazzasBazaar(null, null, null, null);
+
+            foreach (var prod in obj)
+            {
+                products.Add(new DTO.OrderProcessProducts()
+                {
+                    Id = prod.Id,
+                    Description = prod.Description,
+                    Ean = prod.Ean,
+                    ExpectedRestock = prod.ExpectedRestock,
+                    InStock = prod.InStock,
+                    Name = prod.Name,
+                    Price = prod.Price,
+                    Brand = new DTO.Brand()
+                    {
+                        ID = prod.BrandId,
+                        Name = prod.BrandName
+                    },
+                    Category = new DTO.Category()
+                    {
+                        ID = prod.CategoryId,
+                        Name = prod.CategoryName
+                    }
+                });
+            }
+
+            return products;
+        }
+
+        public async Task<List<DTO.VendorProducts>> GetAllProducts()
+        {
+            List<DTO.VendorProducts> vendorProducts = new List<DTO.VendorProducts>();
+
+            var a = GetProductsFromBazzasBazaar(null, null, null, null);
+
+            //HttpClient client = new HttpClient();
+            //client.BaseAddress = new Uri("http://localhost:56851/");
+
+            //// Add an Accept header for JSON format.
+            //client.DefaultRequestHeaders.Accept.Add(
+            //    new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //HttpResponseMessage response = client.GetAsync("api/User").Result;
+
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    var users = response.Content.ReadAsStringAsync &
+            //    lt; IEnumerable & lt; Users & gt; &gt; ().Result;
+            //    usergrid.ItemsSource = users;
+
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Error Code" +
+            //    response.StatusCode + " : Message - " + response.ReasonPhrase);
+            //}
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://undercutters.azurewebsites.net/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = await client.GetAsync("api/product");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    List<Product> obj = new List<Product>();
+
+                    string result = await response.Content.ReadAsStringAsync();
+                    //object json = JsonConvert.DeserializeObject(details.Result);
+
+                    obj = JsonConvert.DeserializeObject<List<Product>>(result);
+
+                    vendorProducts.Add(new DTO.VendorProducts()
+                    {
+                        Name = "BazaasBazaar",
+                        Products = obj
+                    });                 
+                }
+                else
+                {
+
+                }
+            }
+
+            return vendorProducts;
+        }
 
         private static DTO.Vendor Map(Models.Vendor Vendor)
         {
@@ -42,6 +242,17 @@ namespace ThamcoVendors.Service
             IMapper iMapper = config.CreateMapper();
 
             return iMapper.Map<Models.Vendor, DTO.Vendor>(Vendor);
+        }
+
+        private static DTO.Vendors.Product MapFromApi(JObject json)
+        {
+            MapperConfiguration config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<JObject, DTO.Vendors.Product>();
+            });
+
+            IMapper iMapper = config.CreateMapper();
+
+            return iMapper.Map<JObject, DTO.Vendors.Product>(json);
         }
 
         private static DTO.Vendors.Product MapFromBazzas(BazzasBazaarService.Product Vendor)

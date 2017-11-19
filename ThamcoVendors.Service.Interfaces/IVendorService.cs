@@ -11,5 +11,8 @@ namespace ThamcoVendors.Service.Interfaces
         DTO.Vendor Get(int ID);
         Task<List<DTO.Vendors.Product>> GetProductsFromBazzasBazaar(int? CategoryId, String CategoryName,
             double? MinPrice, double? MaxPrice);
+        Task<List<DTO.VendorProducts>> GetAllProducts();
+        Task<List<DTO.OrderProcessProducts>> GetDodgyDealers();
+        Task<List<DTO.OrderProcessProducts>> GetUndercutters();
     }
 }
