@@ -8,5 +8,6 @@ namespace ThamcoVendors.Service.Interfaces
     {
         IEnumerable<DTO.Vendor> GetAll();
         DTO.Vendor Get(int ID);
+
     }
 }

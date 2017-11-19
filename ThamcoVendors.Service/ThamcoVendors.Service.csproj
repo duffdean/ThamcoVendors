@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ThamcoVendors.DTO\ThamcoVendors.DTO.csproj" />
     <ProjectReference Include="..\ThamcoVendors.Models\ThamcoVendors.Models.csproj" />
     <ProjectReference Include="..\ThamcoVendors.Repository.Interfaces\ThamcoVendors.Repository.Interfaces.csproj" />

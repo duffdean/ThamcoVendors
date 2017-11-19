@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
 using System.Linq;
 using ThamcoVendors.Repository.Interfaces;
 using ThamcoVendors.Service.Interfaces;
@@ -29,12 +30,18 @@ namespace ThamcoVendors.Service
         }
         
 
-        private static DTO.Vendor Map(Models.Vendor Customer)
+        private static DTO.Vendor Map(Models.Vendor Vendor)
         {
-            return new DTO.Vendor
-            {
-            };
+            MapperConfiguration config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<Models.Vendor, DTO.Vendor>();
+            });
+
+            IMapper iMapper = config.CreateMapper();
+
+            return iMapper.Map<Models.Vendor, DTO.Vendor>(Vendor);
         }
+
+
         
     }
 }

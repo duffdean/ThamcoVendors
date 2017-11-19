@@ -19,6 +19,7 @@ namespace ThamcoVendors.Controllers
 
         public IActionResult Index()
         {
+            var a = _vendorService.GetAll();
             return View();
         }
 
