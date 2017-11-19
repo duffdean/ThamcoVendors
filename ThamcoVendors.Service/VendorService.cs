@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ThamcoVendors.Repository.Interfaces;
 using ThamcoVendors.Service.Interfaces;
+using ThamcoVendors.DTO.Vendors;
 
 namespace ThamcoVendors.Service
 {
@@ -41,7 +44,30 @@ namespace ThamcoVendors.Service
             return iMapper.Map<Models.Vendor, DTO.Vendor>(Vendor);
         }
 
+        private static DTO.Vendors.Product MapFromBazzas(BazzasBazaarService.Product Vendor)
+        {
+            MapperConfiguration config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<BazzasBazaarService.Product, DTO.Vendors.Product>();
+            });
 
-        
+            IMapper iMapper = config.CreateMapper();
+
+            return iMapper.Map<BazzasBazaarService.Product, DTO.Vendors.Product>(Vendor);
+        }
+
+        public async Task<List<DTO.Vendors.Product>> GetProductsFromBazzasBazaar(int? CategoryId, String CategoryName, double? MinPrice, double? MaxPrice)
+        {
+            BazzasBazaarService.StoreClient svc = new BazzasBazaarService.StoreClient();
+            List<BazzasBazaarService.Product> svcProducts = await svc.GetFilteredProductsAsync(CategoryId, CategoryName, MinPrice, MaxPrice);
+            //List<DTO.Vendors.BazzasBazaar> products = new List<DTO.Vendors.BazzasBazaar>();
+            List<DTO.Vendors.Product> products = new List<DTO.Vendors.Product>();
+
+            foreach (BazzasBazaarService.Product prod in svcProducts)
+            {
+                products.Add(MapFromBazzas(prod));
+            }
+
+            return products;
+        }
     }
 }

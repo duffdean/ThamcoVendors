@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ThamcoVendors.Service.Interfaces
 {
@@ -8,6 +9,7 @@ namespace ThamcoVendors.Service.Interfaces
     {
         IEnumerable<DTO.Vendor> GetAll();
         DTO.Vendor Get(int ID);
-
+        Task<List<DTO.Vendors.Product>> GetProductsFromBazzasBazaar(int? CategoryId, String CategoryName,
+            double? MinPrice, double? MaxPrice);
     }
 }

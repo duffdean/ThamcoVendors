@@ -20,6 +20,7 @@ namespace ThamcoVendors.Controllers
         public IActionResult Index()
         {
             var a = _vendorService.GetAll();
+            var b = _vendorService.GetProductsFromBazzasBazaar(null, null, null, null).Result;
             return View();
         }
 
