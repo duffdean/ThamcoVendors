@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using ThamcoVendors.Service.Helpers;
 
 namespace ThamcoVendors.Service
 {
@@ -26,14 +27,14 @@ namespace ThamcoVendors.Service
         {
             var Vendor = _VendorRepository.GetAll();
 
-            return Vendor.Select(Map);
+            return Vendor.Select(Mappers.Map);
         }
 
         public DTO.Vendor Get(int id)
         {
             var Vendor = _VendorRepository.Get(id);
 
-            return Vendor == null ? null : Map(Vendor);
+            return Vendor == null ? null : Mappers.Map(Vendor);
         }
 
         public async Task<List<DTO.OrderProcessProducts>> GetUndercutters()
@@ -98,39 +99,51 @@ namespace ThamcoVendors.Service
                 client.BaseAddress = new Uri("http://dodgydealers.azurewebsites.net/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = await client.GetAsync("api/product");
+                HttpResponseMessage response = new HttpResponseMessage();
+
+
+                var maxRetryAttempts = 3;
+                var pauseBetweenFailures = TimeSpan.FromSeconds(2);
+                await RetryHelper.RetryOnExceptionAsync<HttpRequestException>
+                    (maxRetryAttempts, pauseBetweenFailures, async () => {
+                        response = await client.GetAsync("api/product");
+                        response.EnsureSuccessStatusCode();
+                    });
+
+
 
                 if (response.IsSuccessStatusCode)
                 {
-                    List<Product> obj = new List<Product>();
+                    List<Product> returnData = new List<Product>();
 
                     string result = await response.Content.ReadAsStringAsync();
                     //object json = JsonConvert.DeserializeObject(details.Result);
 
-                    obj = JsonConvert.DeserializeObject<List<Product>>(result);
+                    returnData = JsonConvert.DeserializeObject<List<Product>>(result);
 
-                    foreach (var prod in obj)
+                    foreach (Product prod in returnData)
                     {
-                        products.Add(new DTO.OrderProcessProducts()
-                        {
-                            Id = prod.Id,
-                            Description = prod.Description,
-                            Ean = prod.Ean,
-                            ExpectedRestock = prod.ExpectedRestock,
-                            InStock = prod.InStock,
-                            Name = prod.Name,
-                            Price = prod.Price,
-                            Brand = new DTO.Brand()
-                            {
-                                ID = prod.BrandId,
-                                Name = prod.BrandName
-                            },
-                            Category = new DTO.Category()
-                            {
-                                ID = prod.CategoryId,
-                                Name = prod.CategoryName
-                            }
-                        });
+                        products.Add(Mappers.MapProduct(prod));
+                        //products.Add(new DTO.OrderProcessProducts()
+                        //{
+                        //    Id = prod.Id,
+                        //    Description = prod.Description,
+                        //    Ean = prod.Ean,
+                        //    ExpectedRestock = prod.ExpectedRestock,
+                        //    InStock = prod.InStock,
+                        //    Name = prod.Name,
+                        //    Price = prod.Price,
+                        //    Brand = new DTO.Brand()
+                        //    {
+                        //        ID = prod.BrandId,
+                        //        Name = prod.BrandName
+                        //    },
+                        //    Category = new DTO.Category()
+                        //    {
+                        //        ID = prod.CategoryId,
+                        //        Name = prod.CategoryName
+                        //    }
+                        //});
                     }
                 }
                 else
@@ -233,39 +246,6 @@ namespace ThamcoVendors.Service
             return vendorProducts;
         }
 
-        private static DTO.Vendor Map(Models.Vendor Vendor)
-        {
-            MapperConfiguration config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Models.Vendor, DTO.Vendor>();
-            });
-
-            IMapper iMapper = config.CreateMapper();
-
-            return iMapper.Map<Models.Vendor, DTO.Vendor>(Vendor);
-        }
-
-        private static DTO.Vendors.Product MapFromApi(JObject json)
-        {
-            MapperConfiguration config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<JObject, DTO.Vendors.Product>();
-            });
-
-            IMapper iMapper = config.CreateMapper();
-
-            return iMapper.Map<JObject, DTO.Vendors.Product>(json);
-        }
-
-        private static DTO.Vendors.Product MapFromBazzas(BazzasBazaarService.Product Vendor)
-        {
-            MapperConfiguration config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<BazzasBazaarService.Product, DTO.Vendors.Product>();
-            });
-
-            IMapper iMapper = config.CreateMapper();
-
-            return iMapper.Map<BazzasBazaarService.Product, DTO.Vendors.Product>(Vendor);
-        }
-
         public async Task<List<DTO.Vendors.Product>> GetProductsFromBazzasBazaar(int? CategoryId, String CategoryName, double? MinPrice, double? MaxPrice)
         {
             BazzasBazaarService.StoreClient svc = new BazzasBazaarService.StoreClient();
@@ -275,7 +255,7 @@ namespace ThamcoVendors.Service
 
             foreach (BazzasBazaarService.Product prod in svcProducts)
             {
-                products.Add(MapFromBazzas(prod));
+                products.Add(Mappers.MapFromBazzas(prod));
             }
 
             return products;
