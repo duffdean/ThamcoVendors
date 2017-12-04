@@ -42,5 +42,31 @@ namespace ThamcoVendors.Controllers.api
 
             return null;
         }
+
+        // GET: api/User
+        [HttpPost("Order")]
+        //[Authorize(Policy = "ThamcoUser")]
+        public async Task<List<OrderProcessProducts>> Order(DTO.Order Order)
+        {
+            //var users = _vendorService.GetProductsByVendor(Vendor);
+
+            List<OrderProcessProducts> prods;
+            switch (Order.Vendor.ToLower())
+            {
+                case "undercutters":
+                    //return await _vendorService.OrderUndercutters(Order);
+                    return null;
+                case "bazzasbazaar":
+                    _vendorService.OrderUndercutters(Order);
+                    return null;
+                case "dodgydealers":
+                    //return await _vendorService.GetDodgyDealers();
+                    return null;
+                default:
+                    break;
+            }
+
+            return null;
+        }
     }
 }

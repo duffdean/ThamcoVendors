@@ -11,12 +11,15 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using ThamcoVendors.Service.Helpers;
+using System.Text;
 
 namespace ThamcoVendors.Service
 {
     public class VendorService : IVendorService
     {
         private readonly IRepository<Models.Vendor> _VendorRepository;
+        private int maxRetryAttempts = 3;
+        private TimeSpan pauseBetweenFailures = TimeSpan.FromSeconds(2);
 
         public VendorService(IRepository<Models.Vendor> VendorRepository)
         {
@@ -102,8 +105,7 @@ namespace ThamcoVendors.Service
                 HttpResponseMessage response = new HttpResponseMessage();
 
 
-                var maxRetryAttempts = 3;
-                var pauseBetweenFailures = TimeSpan.FromSeconds(2);
+                
                 await RetryHelper.RetryOnExceptionAsync<HttpRequestException>
                     (maxRetryAttempts, pauseBetweenFailures, async () => {
                         response = await client.GetAsync("api/product");
@@ -185,6 +187,50 @@ namespace ThamcoVendors.Service
             }
 
             return products;
+        }
+        
+        public async void OrderUndercutters(DTO.Order Order)
+        {
+            List<DTO.OrderProcessProducts> products = new List<DTO.OrderProcessProducts>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://dodgydealers.azurewebsites.net/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = new HttpResponseMessage();
+
+
+
+#pragma warning disable CS0618 // Type or member is obsolete
+                var json = await JsonConvert.SerializeObjectAsync(Order);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+                var httpClient = new HttpClient();
+                httpClient.BaseAddress = new Uri("http://localhost:31724");
+                StringContent content = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
+                var result = httpClient.PutAsync("api/Order", content).Result;
+
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                }
+                else
+                {
+
+                }
+            }
+        }
+
+        public async void OrderDodgyDealers(DTO.Order Order)
+        {
+
+        }
+
+        public async void OrderBazzasBazzar(DTO.Order Order)
+        {
+
         }
 
         public async Task<List<DTO.VendorProducts>> GetAllProducts()
