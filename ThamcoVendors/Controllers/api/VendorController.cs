@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ThamcoVendors.Service.Interfaces;
 using ThamcoVendors.DTO;
+using System.Net.Http;
+using System.Net;
 
 namespace ThamcoVendors.Controllers.api
 {
@@ -46,7 +48,7 @@ namespace ThamcoVendors.Controllers.api
         // GET: api/User
         [HttpPost("Order")]
         //[Authorize(Policy = "ThamcoUser")]
-        public async Task<List<OrderProcessProducts>> Order(DTO.Order Order)
+        public async Task<HttpResponseMessage> Order(DTO.Order Order)
         {
             //var users = _vendorService.GetProductsByVendor(Vendor);
 
@@ -54,19 +56,16 @@ namespace ThamcoVendors.Controllers.api
             switch (Order.Vendor.ToLower())
             {
                 case "undercutters":
-                    //return await _vendorService.OrderUndercutters(Order);
-                    return null;
+                    return await _vendorService.OrderUndercutters(Order);
                 case "bazzasbazaar":
-                    _vendorService.OrderUndercutters(Order);
-                    return null;
+                    return await _vendorService.OrderUndercutters(Order);
                 case "dodgydealers":
-                    //return await _vendorService.GetDodgyDealers();
-                    return null;
+                    return await _vendorService.OrderUndercutters(Order);
                 default:
                     break;
             }
 
-            return null;
+            return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Invalid Vendor name provided", System.Text.Encoding.UTF8, "application/json") };
         }
     }
 }

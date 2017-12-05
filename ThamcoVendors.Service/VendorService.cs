@@ -12,14 +12,16 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using ThamcoVendors.Service.Helpers;
 using System.Text;
+using System.Net;
+using System.IO;
 
 namespace ThamcoVendors.Service
 {
     public class VendorService : IVendorService
     {
         private readonly IRepository<Models.Vendor> _VendorRepository;
-        private int maxRetryAttempts = 3;
-        private TimeSpan pauseBetweenFailures = TimeSpan.FromSeconds(2);
+        private int maxRetryAttempts = 5;
+        private TimeSpan pauseBetweenFailures = TimeSpan.FromSeconds(1);
 
         public VendorService(IRepository<Models.Vendor> VendorRepository)
         {
@@ -46,7 +48,7 @@ namespace ThamcoVendors.Service
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://undercutters.azurewebsites.net/");
+                client.BaseAddress = new Uri(Vendors.Undercutters);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = await client.GetAsync("api/product");
@@ -99,7 +101,7 @@ namespace ThamcoVendors.Service
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://dodgydealers.azurewebsites.net/");
+                client.BaseAddress = new Uri(Vendors.DodgyDealers);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = new HttpResponseMessage();
@@ -157,7 +159,7 @@ namespace ThamcoVendors.Service
             return products;
         }
 
-        public async Task<List<DTO.OrderProcessProducts>> GetBazzasBazzar()
+        public async Task<List<DTO.OrderProcessProducts>> GetBazzasBazar()
         {
             List<DTO.OrderProcessProducts> products = new List<DTO.OrderProcessProducts>();
             var obj = await GetProductsFromBazzasBazaar(null, null, null, null);
@@ -189,37 +191,39 @@ namespace ThamcoVendors.Service
             return products;
         }
         
-        public async void OrderUndercutters(DTO.Order Order)
+        public async Task<HttpResponseMessage> OrderUndercutters(DTO.Order Order)
         {
             List<DTO.OrderProcessProducts> products = new List<DTO.OrderProcessProducts>();
 
-            using (var client = new HttpClient())
+            using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://dodgydealers.azurewebsites.net/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = new HttpResponseMessage();
-
-
-
-#pragma warning disable CS0618 // Type or member is obsolete
+                string returnData;
+                
+                #pragma warning disable CS0618 // Type or member is obsolete
                 var json = await JsonConvert.SerializeObjectAsync(Order);
-#pragma warning restore CS0618 // Type or member is obsolete
+                #pragma warning restore CS0618 // Type or member is obsolete
 
                 var httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri("http://localhost:31724");
+                httpClient.BaseAddress = new Uri("http://dodgydealers.azurewebsites.net/");
                 StringContent content = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
-                var result = httpClient.PutAsync("api/Order", content).Result;
+                //var result = httpClient.PostAsync("api/Order", content).Result;
 
 
+                await RetryHelper.RetryOnExceptionAsync<HttpRequestException>
+                   (maxRetryAttempts, pauseBetweenFailures, async () => {
+                       response = await httpClient.PostAsync("api/Order", content);
+                       response.EnsureSuccessStatusCode();
+                   });
 
-                if (response.IsSuccessStatusCode)
+                returnData = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
                 {
+                    return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(returnData, System.Text.Encoding.UTF8, "application/json") };
                 }
-                else
-                {
 
-                }
+                return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(returnData, System.Text.Encoding.UTF8, "application/json") };
             }
         }
 
@@ -228,7 +232,7 @@ namespace ThamcoVendors.Service
 
         }
 
-        public async void OrderBazzasBazzar(DTO.Order Order)
+        public async void OrderBazzasBazar(DTO.Order Order)
         {
 
         }

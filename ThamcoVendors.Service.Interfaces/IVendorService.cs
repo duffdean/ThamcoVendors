@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,6 @@ namespace ThamcoVendors.Service.Interfaces
         Task<List<DTO.VendorProducts>> GetAllProducts();
         Task<List<DTO.OrderProcessProducts>> GetDodgyDealers();
         Task<List<DTO.OrderProcessProducts>> GetUndercutters();
-        void OrderUndercutters(DTO.Order Order);
+        Task<HttpResponseMessage> OrderUndercutters(DTO.Order Order);
     }
 }
