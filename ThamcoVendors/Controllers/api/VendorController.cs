@@ -48,24 +48,34 @@ namespace ThamcoVendors.Controllers.api
         // GET: api/User
         [HttpPost("Order")]
         //[Authorize(Policy = "ThamcoUser")]
-        public async Task<HttpResponseMessage> Order(DTO.Order Order)
+        public async Task<IActionResult> Order([FromBody]DTO.Order Order)
         {
-            //var users = _vendorService.GetProductsByVendor(Vendor);
+            string returnData;
+            HttpResponseMessage response = new HttpResponseMessage();
 
-            List<OrderProcessProducts> prods;
             switch (Order.Vendor.ToLower())
             {
                 case "undercutters":
-                    return await _vendorService.OrderUndercutters(Order);
+                    response = await _vendorService.OrderUndercutters(Order);
+                    break;
                 case "bazzasbazaar":
-                    return await _vendorService.OrderFromBazzasBazaar(Order);
+                    response = await _vendorService.OrderFromBazzasBazaar(Order);
+                    break;
                 case "dodgydealers":
-                    return await _vendorService.OrderDodgyDealers(Order);
+                    response = await _vendorService.OrderDodgyDealers(Order);
+                    break;
                 default:
                     break;
             }
 
-            return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Invalid Vendor name provided", System.Text.Encoding.UTF8, "application/json") };
+            if(!response.IsSuccessStatusCode)
+            {
+                return BadRequest();
+            }
+
+            returnData = await response.Content.ReadAsStringAsync();
+
+            return Ok(returnData);
         }
     }
 }
