@@ -20,7 +20,7 @@ namespace ThamcoVendors.Service
     public class VendorService : IVendorService
     {
         private readonly IRepository<Models.Vendor> _VendorRepository;
-        private int maxRetryAttempts = 5;
+        private int maxRetryAttempts = 10;
         private TimeSpan pauseBetweenFailures = TimeSpan.FromSeconds(1);
 
         public VendorService(IRepository<Models.Vendor> VendorRepository)
@@ -58,7 +58,6 @@ namespace ThamcoVendors.Service
                     List<Product> obj = new List<Product>();
 
                     string result = await response.Content.ReadAsStringAsync();
-                    //object json = JsonConvert.DeserializeObject(details.Result);
 
                     obj = JsonConvert.DeserializeObject<List<Product>>(result);
 
@@ -105,8 +104,6 @@ namespace ThamcoVendors.Service
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = new HttpResponseMessage();
-
-
                 
                 await RetryHelper.RetryOnExceptionAsync<HttpRequestException>
                     (maxRetryAttempts, pauseBetweenFailures, async () => {
@@ -114,45 +111,18 @@ namespace ThamcoVendors.Service
                         response.EnsureSuccessStatusCode();
                     });
 
-
-
                 if (response.IsSuccessStatusCode)
                 {
                     List<Product> returnData = new List<Product>();
 
                     string result = await response.Content.ReadAsStringAsync();
-                    //object json = JsonConvert.DeserializeObject(details.Result);
 
                     returnData = JsonConvert.DeserializeObject<List<Product>>(result);
 
                     foreach (Product prod in returnData)
                     {
                         products.Add(Mappers.MapProduct(prod));
-                        //products.Add(new DTO.OrderProcessProducts()
-                        //{
-                        //    Id = prod.Id,
-                        //    Description = prod.Description,
-                        //    Ean = prod.Ean,
-                        //    ExpectedRestock = prod.ExpectedRestock,
-                        //    InStock = prod.InStock,
-                        //    Name = prod.Name,
-                        //    Price = prod.Price,
-                        //    Brand = new DTO.Brand()
-                        //    {
-                        //        ID = prod.BrandId,
-                        //        Name = prod.BrandName
-                        //    },
-                        //    Category = new DTO.Category()
-                        //    {
-                        //        ID = prod.CategoryId,
-                        //        Name = prod.CategoryName
-                        //    }
-                        //});
                     }
-                }
-                else
-                {
-
                 }
             }
 
@@ -207,8 +177,6 @@ namespace ThamcoVendors.Service
                 var httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(Vendors.Undercutters);
                 StringContent content = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
-                //var result = httpClient.PostAsync("api/Order", content).Result;
-
 
                 await RetryHelper.RetryOnExceptionAsync<HttpRequestException>
                    (maxRetryAttempts, pauseBetweenFailures, async () => {
@@ -273,28 +241,6 @@ namespace ThamcoVendors.Service
 
             var a = GetProductsFromBazzasBazaar(null, null, null, null);
 
-            //HttpClient client = new HttpClient();
-            //client.BaseAddress = new Uri("http://localhost:56851/");
-
-            //// Add an Accept header for JSON format.
-            //client.DefaultRequestHeaders.Accept.Add(
-            //    new MediaTypeWithQualityHeaderValue("application/json"));
-
-            //HttpResponseMessage response = client.GetAsync("api/User").Result;
-
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    var users = response.Content.ReadAsStringAsync &
-            //    lt; IEnumerable & lt; Users & gt; &gt; ().Result;
-            //    usergrid.ItemsSource = users;
-
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Error Code" +
-            //    response.StatusCode + " : Message - " + response.ReasonPhrase);
-            //}
-
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://undercutters.azurewebsites.net/");
@@ -330,7 +276,6 @@ namespace ThamcoVendors.Service
         {
             BazzasBazaarService.StoreClient svc = new BazzasBazaarService.StoreClient();
             List<BazzasBazaarService.Product> svcProducts = await svc.GetFilteredProductsAsync(CategoryId, CategoryName, MinPrice, MaxPrice);
-            //List<DTO.Vendors.BazzasBazaar> products = new List<DTO.Vendors.BazzasBazaar>();
             List<DTO.Vendors.Product> products = new List<DTO.Vendors.Product>();
 
             foreach (BazzasBazaarService.Product prod in svcProducts)
