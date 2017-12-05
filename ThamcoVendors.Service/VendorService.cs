@@ -168,7 +168,7 @@ namespace ThamcoVendors.Service
             using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage response = new HttpResponseMessage();
-                string returnData;
+                string returnData = "";
                 
                 #pragma warning disable CS0618 // Type or member is obsolete
                 var json = await JsonConvert.SerializeObjectAsync(Order);
@@ -181,10 +181,9 @@ namespace ThamcoVendors.Service
                 await RetryHelper.RetryOnExceptionAsync<HttpRequestException>
                    (maxRetryAttempts, pauseBetweenFailures, async () => {
                        response = await httpClient.PostAsync("api/Order", content);
-                       response.EnsureSuccessStatusCode();
+                       //response.EnsureSuccessStatusCode();
+                       returnData = await response.Content.ReadAsStringAsync();
                    });
-
-                returnData = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -202,7 +201,7 @@ namespace ThamcoVendors.Service
             using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage response = new HttpResponseMessage();
-                string returnData;
+                string returnData = "";
 
                 #pragma warning disable CS0618 // Type or member is obsolete
                 var json = await JsonConvert.SerializeObjectAsync(Order);
@@ -215,11 +214,10 @@ namespace ThamcoVendors.Service
                 await RetryHelper.RetryOnExceptionAsync<HttpRequestException>
                    (maxRetryAttempts, pauseBetweenFailures, async () => {
                        response = await httpClient.PostAsync("api/Order", content);
-                       response.EnsureSuccessStatusCode();
+                       //response.EnsureSuccessStatusCode();
+                       returnData = await response.Content.ReadAsStringAsync();
                    });
-
-                returnData = await response.Content.ReadAsStringAsync();
-
+                
                 if (!response.IsSuccessStatusCode)
                 {
                     return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(returnData, System.Text.Encoding.UTF8, "application/json") };

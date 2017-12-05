@@ -68,12 +68,14 @@ namespace ThamcoVendors.Controllers.api
                     break;
             }
 
-            if(!response.IsSuccessStatusCode)
+            returnData = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
             {
-                return BadRequest();
+                return BadRequest(returnData);
             }
 
-            returnData = await response.Content.ReadAsStringAsync();
+            
 
             return Ok(returnData);
         }

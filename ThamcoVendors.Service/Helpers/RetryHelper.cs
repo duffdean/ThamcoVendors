@@ -29,7 +29,19 @@ namespace ThamcoVendors.Service.Helpers
                 try
                 {
                     attempts++;
-                    await operation();
+                    try
+                    {
+                        await operation();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (attempts == times)
+                            throw;
+
+                        await CreateDelayForException(times, attempts, delay, ex);
+
+                    }
+                    
                     break;
                 }
                 catch (TException ex)
