@@ -205,7 +205,7 @@ namespace ThamcoVendors.Service
                 #pragma warning restore CS0618 // Type or member is obsolete
 
                 var httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri("http://dodgydealers.azurewebsites.net/");
+                httpClient.BaseAddress = new Uri(Vendors.Undercutters);
                 StringContent content = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
                 //var result = httpClient.PostAsync("api/Order", content).Result;
 
@@ -227,16 +227,46 @@ namespace ThamcoVendors.Service
             }
         }
 
-        public async void OrderDodgyDealers(DTO.Order Order)
+        public async Task<HttpResponseMessage> OrderDodgyDealers(DTO.Order Order)
         {
+            List<DTO.OrderProcessProducts> products = new List<DTO.OrderProcessProducts>();
 
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                string returnData;
+
+                #pragma warning disable CS0618 // Type or member is obsolete
+                var json = await JsonConvert.SerializeObjectAsync(Order);
+                #pragma warning restore CS0618 // Type or member is obsolete
+
+                var httpClient = new HttpClient();
+                httpClient.BaseAddress = new Uri(Vendors.DodgyDealers);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                await RetryHelper.RetryOnExceptionAsync<HttpRequestException>
+                   (maxRetryAttempts, pauseBetweenFailures, async () => {
+                       response = await httpClient.PostAsync("api/Order", content);
+                       response.EnsureSuccessStatusCode();
+                   });
+
+                returnData = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(returnData, System.Text.Encoding.UTF8, "application/json") };
+                }
+
+                return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(returnData, System.Text.Encoding.UTF8, "application/json") };
+            }
         }
 
-        public async void OrderBazzasBazar(DTO.Order Order)
+        public async Task<HttpResponseMessage> OrderBazzasBazar(DTO.Order Order)
         {
-
+            var obj = await OrderFromBazzasBazaar(Order);
+            return null;
         }
-
+        
         public async Task<List<DTO.VendorProducts>> GetAllProducts()
         {
             List<DTO.VendorProducts> vendorProducts = new List<DTO.VendorProducts>();
@@ -309,6 +339,19 @@ namespace ThamcoVendors.Service
             }
 
             return products;
+        }
+
+        public async Task<HttpResponseMessage> OrderFromBazzasBazaar(DTO.Order Order)
+        {
+            BazzasBazaarService.StoreClient svc = new BazzasBazaarService.StoreClient();
+
+            BazzasBazaarService.Order order = await svc.CreateOrderAsync(Order.AccountName, Order.CardNumber, Order.ProductID, Order.Quantity);
+
+            #pragma warning disable CS0618 // Type or member is obsolete
+            var returnOrder = await JsonConvert.SerializeObjectAsync(order);
+            #pragma warning restore CS0618 // Type or member is obsolete
+
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(returnOrder, System.Text.Encoding.UTF8, "application/json") };
         }
     }
 }

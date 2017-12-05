@@ -58,9 +58,9 @@ namespace ThamcoVendors.Controllers.api
                 case "undercutters":
                     return await _vendorService.OrderUndercutters(Order);
                 case "bazzasbazaar":
-                    return await _vendorService.OrderUndercutters(Order);
+                    return await _vendorService.OrderFromBazzasBazaar(Order);
                 case "dodgydealers":
-                    return await _vendorService.OrderUndercutters(Order);
+                    return await _vendorService.OrderDodgyDealers(Order);
                 default:
                     break;
             }

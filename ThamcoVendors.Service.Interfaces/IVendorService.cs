@@ -16,5 +16,7 @@ namespace ThamcoVendors.Service.Interfaces
         Task<List<DTO.OrderProcessProducts>> GetDodgyDealers();
         Task<List<DTO.OrderProcessProducts>> GetUndercutters();
         Task<HttpResponseMessage> OrderUndercutters(DTO.Order Order);
+        Task<HttpResponseMessage> OrderDodgyDealers(DTO.Order Order);
+        Task<HttpResponseMessage> OrderFromBazzasBazaar(DTO.Order Order);
     }
 }

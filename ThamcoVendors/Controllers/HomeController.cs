@@ -19,21 +19,22 @@ namespace ThamcoVendors.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //var a = _vendorService.GetAll();
-            //var b = _vendorService.GetDodgyDealers();
-            ////var b = _vendorService.GetProductsFromBazzasBazaar(null, null, null, null).Result;
-            //var c = await _vendorService.GetAllProducts();
-            DTO.Order order = new DTO.Order()
-            {
-                AccountName = "dfgdfg",
-                CardNumber = "dfgdfgdfg",
-                ProductID = 1,
-                Quantity = 1,
-                Vendor = "hh"
+            ////var a = _vendorService.GetAll();
+            ////var b = _vendorService.GetDodgyDealers();
+            //////var b = _vendorService.GetProductsFromBazzasBazaar(null, null, null, null).Result;
+            ////var c = await _vendorService.GetAllProducts();
+            //DTO.Order order = new DTO.Order()
+            //{
+            //    AccountName = "dfgdfg",
+            //    CardNumber = "dfgdfgdfg",
+            //    ProductID = 1,
+            //    Quantity = 1,
+            //    Vendor = "bazzasbazaar"
 
-            };
+            //};
 
-            _vendorService.OrderUndercutters(order);
+            ////_vendorService.OrderUndercutters(order);
+            //var a = await _vendorService.OrderFromBazzasBazaar(order);
 
             return View();
         }
